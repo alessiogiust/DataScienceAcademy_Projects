@@ -10,10 +10,14 @@ df = pd.read_csv('data/titanic.csv')
 Xtita = df[['Pclass', 'SibSp', 'Parch', 'Fare']]
 ytita = df['Survived']
 
-# Define training and final evaluation test
+######## Define training and final evaluation test
 X_train, X_test, y_train, y_test = train_test_split(Xtita, ytita, random_state=555, shuffle=True)
 
-##### NESTED CV and FINAL EVALUATION FUNCTIONS
+
+################################################################################
+######## NESTED CV and FINAL EVALUATION FUNCTIONS
+################################################################################
+
 def nested_CV(models, X_train, y_train, k1, k2, param_grids):
     # models, p_grids, X_train, y_train, k1, k2
     """
@@ -40,7 +44,7 @@ def nested_CV(models, X_train, y_train, k1, k2, param_grids):
             # identify best estimator and compute score on Outer split test set
             best_model = results_grCV.best_estimator_   
             best_model.fit(X_train_cv, y_train_cv)
-            sc = best_model.score(X_test_cv, y_test_cv)    # in this case accuracy for simplicity, every other score could be used (also you could add a parameter in the function to identify scoring method)
+            sc = best_model.score(X_test_cv, y_test_cv)    # in this case accuracy as metric for simplicity, every other score could be used (also you could add a parameter in the function to identify scoring method)
             nestedCV_scores.loc[f"Outer split {i+1}", mod] = sc
     
     nestedCV_scores.loc["Average Score"] = nestedCV_scores.mean(axis=0)  # add average score for each model at the end
@@ -58,7 +62,7 @@ def final_evaluation(best_model, param_grid, k, X_train, y_train, X_final_test, 
     best_hyper_best_model = results_grCV.best_estimator_
     # final score for optimized best model
     best_hyper_best_model.fit(X_train, y_train)
-    score_final = best_hyper_best_model.score(X_test, y_test) 
+    score_final = best_hyper_best_model.score(X_final_test, y_final_test) 
     return best_hyper_best_model, score_final
 
 
@@ -81,9 +85,11 @@ print(f"Best model: {best_mod_tuned}, Final Score = {round(final_eval_score, 4)}
 print("\n")
 
 
+
 ################################################################################
 ######## EXAMPLE FUNCTION TO PRINT THE STEPS OF THE PROCESS (simplified)
 ################################################################################
+
 def nested_CV_example():
     """
     Show the steps of nested CV process (hyperparameters tuning and model selection):
