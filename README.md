@@ -5,3 +5,4 @@ Projects and exercises related to Data analytics & Machine Learning, developed d
 LINKS TO KAGGLE DATASETS:
  - https://www.kaggle.com/c/tabular-playground-series-nov-2021/data
  - https://www.kaggle.com/jsphyg/weather-dataset-rattle-package
+ - https://www.kaggle.com/c/tabular-playground-series-dec-2021/data
